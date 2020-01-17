@@ -1,51 +1,77 @@
 <?php
 
-$amountOfMonkeys = $_POST["Apa"];
-$amountOfGirafs = $_POST["Giraff"];
-$amountOfTigers = $_POST["Tiger"];
-$amountOfCocoNuts = $_POST["Kokosnöt"];
+session_start();
 
-abstract class Animal {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $_SESSION["animals"] = serialize($_POST);
+} else if (!isset($_SESSION["animals"])) {
+    header('Location:http://localhost:3001/settings.php');
+}
+// IF: Kolla om det är ett POST anrop, isf spara alla värden ifrån $_POST i $_SESSION
+// ELSE IF: Kolla om värden finns sparade i $_SESSION, om inte skicka användaren till settings.php
+
+$amountOfMonkeys = unserialize($_SESSION["animals"])["Apa"];
+$amountOfGirafs = unserialize($_SESSION["animals"])["Giraff"];
+$amountOfTigers = unserialize($_SESSION["animals"])["Tiger"];
+$amountOfCocoNuts = unserialize($_SESSION["animals"])["Kokosnöt"];
+$amountOfLions = unserialize($_SESSION["animals"])["Lejon"];
+$amountOfAntilops = unserialize($_SESSION["animals"])["Antilop"];
+$amountOfPalmtrees = unserialize($_SESSION["animals"])["Palm"];
+$amountOfGorillas = unserialize($_SESSION["animals"])["Gorilla"];
+$amountOfMeranti = unserialize($_SESSION["animals"])["Meranti"];
+$amountOfBoas = unserialize($_SESSION["animals"])["Boa"];
+$amountOfRoses = unserialize($_SESSION["animals"])["Rosor"];
+
+abstract class Animal
+{
     public $name;
     protected $picture;
 
-    public function getPicture() {
+    public function getPicture()
+    {
         return $this->picture;
     }
 
     abstract function makeSound();
 }
 
-class Apa extends Animal {
-
-    function __construct($name) {
-        $this->name = $name;
-        $this->picture = "./apa.jpg";
-    }
-    
-    public function makeSound() {
-        return "OoaaA..OoaaA";
-    }
-} 
-
-class Giraff extends Animal {
-
-    function __construct($name) {
-        $this->name = $name;
-        $this->picture = "./giraff.jpg";
-    }
-
-    public function makeSound() {
-        return "Weeeee!!";
-    }
-}
-
-class Tiger extends Animal {
+class Apa extends Animal
+{
 
     function __construct($name)
     {
         $this->name = $name;
-        $this->picture = "./tiger.jpg";
+        $this->picture = "./Animal/apa.jpg";
+    }
+
+    public function makeSound()
+    {
+        return "OoaaA..OoaaA";
+    }
+}
+
+class Giraff extends Animal
+{
+
+    function __construct($name)
+    {
+        $this->name = $name;
+        $this->picture = "./Animal/giraff.jpg";
+    }
+
+    public function makeSound()
+    {
+        return "Weeeee!!";
+    }
+}
+
+class Tiger extends Animal
+{
+
+    function __construct($name)
+    {
+        $this->name = $name;
+        $this->picture = "./Animal/tiger.jpg";
     }
 
     public function makeSound()
@@ -54,17 +80,116 @@ class Tiger extends Animal {
     }
 }
 
-class Kokosnot extends Animal {
+class Kokosnot extends Animal
+{
 
     function __construct($name)
     {
         $this->name = $name;
-        $this->picture = "./kokosnöt.jpg";
+        $this->picture = "./Animal/kokosnöt.jpg";
     }
 
     public function makeSound()
     {
         return "Boooooop..";
+    }
+}
+class Lejon extends Animal
+{
+
+    function __construct($name)
+    {
+        $this->name = $name;
+        $this->picture = "./Animal/lejon.jpg";
+    }
+
+    public function makeSound()
+    {
+        return "GraaWww!!";
+    }
+}
+class Antilop extends Animal
+{
+
+    function __construct($name)
+    {
+        $this->name = $name;
+        $this->picture = "./Animal/antilop.jpg";
+    }
+
+    public function makeSound()
+    {
+        return "TweeeeTwee..";
+    }
+}
+class Palm extends Animal
+{
+
+    function __construct($name)
+    {
+        $this->name = $name;
+        $this->picture = "./Animal/palm.jpg";
+    }
+
+    public function makeSound()
+    {
+        return "Swissshh..";
+    }
+}
+class Gorilla extends Animal
+{
+
+    function __construct($name)
+    {
+        $this->name = $name;
+        $this->picture = "./Animal/gorilla.jpg";
+    }
+
+    public function makeSound()
+    {
+        return "Aaaawraaaw!!";
+    }
+}
+class Meranti extends Animal
+{
+
+    function __construct($name)
+    {
+        $this->name = $name;
+        $this->picture = "./Animal/meranti.jpg";
+    }
+
+    public function makeSound()
+    {
+        return "KnAk..";
+    }
+}
+class Boa extends Animal
+{
+
+    function __construct($name)
+    {
+        $this->name = $name;
+        $this->picture = "./Animal/boa.jpg";
+    }
+
+    public function makeSound()
+    {
+        return "Zzzzz..";
+    }
+}
+class Rose extends Animal
+{
+
+    function __construct($name)
+    {
+        $this->name = $name;
+        $this->picture = "./Animal/rose.jpg";
+    }
+
+    public function makeSound()
+    {
+        return "'Beautiful'";
     }
 }
 
@@ -78,27 +203,62 @@ $names = array(
 
 $animalArray = array();
 
-for ($i=0; $i < $amountOfMonkeys; $i++) { 
+for ($i = 0; $i < $amountOfMonkeys; $i++) {
     $apa = new Apa($names[$i]);
     array_push($animalArray, $apa);
 }
 
-for ($i=0; $i < $amountOfGirafs; $i++) { 
+for ($i = 0; $i < $amountOfGirafs; $i++) {
     $giraff = new Giraff($names[$i]);
     array_push($animalArray, $giraff);
 }
 
-for ($i=0; $i < $amountOfTigers; $i++) { 
+for ($i = 0; $i < $amountOfTigers; $i++) {
     $tiger = new Tiger($names[$i]);
     array_push($animalArray, $tiger);
 }
 
-for ($i=0; $i < $amountOfCocoNuts; $i++) { 
-    $kokosnöt= new Kokosnot($names[$i]);
+for ($i = 0; $i < $amountOfCocoNuts; $i++) {
+    $kokosnöt = new Kokosnot($names[$i]);
     array_push($animalArray, $kokosnöt);
 }
 
-for ($i=0; $i < count($animalArray); $i++) { 
+for ($i = 0; $i < $amountOfLions; $i++) {
+    $lejon = new Lejon($names[$i]);
+    array_push($animalArray, $lejon);
+}
+
+for ($i = 0; $i < $amountOfAntilops; $i++) {
+    $antilop = new Antilop($names[$i]);
+    array_push($animalArray, $antilop);
+}
+
+for ($i = 0; $i < $amountOfPalmtrees; $i++) {
+    $palm = new Palm($names[$i]);
+    array_push($animalArray, $palm);
+}
+
+for ($i = 0; $i < $amountOfGorillas; $i++) {
+    $gorilla = new Gorilla($names[$i]);
+    array_push($animalArray, $gorilla);
+}
+
+for ($i = 0; $i < $amountOfMeranti; $i++) {
+    $meranti = new Meranti($names[$i]);
+    array_push($animalArray, $meranti);
+}
+
+for ($i = 0; $i < $amountOfBoas; $i++) {
+    $boa = new Boa($names[$i]);
+    array_push($animalArray, $boa);
+}
+
+for ($i = 0; $i < $amountOfRoses; $i++) {
+    $rose = new Rose($names[$i]);
+    array_push($animalArray, $rose);
+}
+
+for ($i = 0; $i < count($animalArray); $i++) {
 
     $animal = $animalArray[$i];
 
@@ -108,8 +268,11 @@ for ($i=0; $i < count($animalArray); $i++) {
     $alert .= $animal->makeSound();
     $alert .= "');";
 
-    echo '<img style="width: 5em; height: 5em; object-fit: contain;" src="' .$animal->getPicture(). '" onClick="' .$alert. '" />';
+    echo '<img style="width: 5em; height: 5em; object-fit: contain;" src="' . $animal->getPicture() . '" onClick="' . $alert . '" />';
     echo "</br></br>";
+
 }
+
+echo '<a href="/?clear=true"><button>Clear</button></a>';
 
 ?>

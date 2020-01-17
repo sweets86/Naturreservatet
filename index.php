@@ -1,28 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Naturreservat</title>
-</head>
-<body>
+<?php
 
-<form action="/results.php" method="POST">
-Apa:<br>
-<input type="number" max=5 name="Apa">
-<br>
-Giraff:<br>
-<input type="number" max=5 name="Giraff">
-<br>
-Tiger:<br>
-<input type="number" max=5 name="Tiger">
-<br>
-Kokosnöt:<br>
-<input type="number" max=5 name="Kokosnöt">
-<br><br>
-<input type="submit" max=5 value="Submit">
-</form>
+session_start();
+
+if(isset($_GET["clear"])) {
+    unset($_SESSION["animals"]);
+}
+
+if (!isset($_SESSION["animals"])) {
+    header('Location:http://localhost:3001/settings.php');
+} else {
+    header('Location:http://localhost:3001/results.php');
+}
+
+?>
     
-</body>
-</html>
