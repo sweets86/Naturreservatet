@@ -22,6 +22,8 @@ $amountOfMeranti = unserialize($_SESSION["animals"])["Meranti"];
 $amountOfBoas = unserialize($_SESSION["animals"])["Boa"];
 $amountOfRoses = unserialize($_SESSION["animals"])["Rosor"];
 
+
+
 abstract class Animal
 {
     public $name;
@@ -193,68 +195,70 @@ class Rose extends Animal
     }
 }
 
-$names = array(
-    "Victor",
-    "Yanica",
-    "Essa",
-    "Johan",
-    "Johanna"
-);
+$rawData = file_get_contents("https://randomuser.me/api?results=30");
+$results = json_decode($rawData)->results;
+$names = array();
+
+for ($i = 0; $i < 30; $i++) {
+    error_log($results[$i]->name->first);
+    array_push($names, $results[$i]->name->first);
+}
 
 $animalArray = array();
+$nameIndex = 0;
 
 for ($i = 0; $i < $amountOfMonkeys; $i++) {
-    $apa = new Apa($names[$i]);
+    $apa = new Apa($names[$nameIndex++]);
     array_push($animalArray, $apa);
 }
 
 for ($i = 0; $i < $amountOfGirafs; $i++) {
-    $giraff = new Giraff($names[$i]);
+    $giraff = new Giraff($names[$nameIndex++]);
     array_push($animalArray, $giraff);
 }
 
 for ($i = 0; $i < $amountOfTigers; $i++) {
-    $tiger = new Tiger($names[$i]);
+    $tiger = new Tiger($names[$nameIndex++]);
     array_push($animalArray, $tiger);
 }
 
 for ($i = 0; $i < $amountOfCocoNuts; $i++) {
-    $kokosnöt = new Kokosnot($names[$i]);
+    $kokosnöt = new Kokosnot($names[$nameIndex++]);
     array_push($animalArray, $kokosnöt);
 }
 
 for ($i = 0; $i < $amountOfLions; $i++) {
-    $lejon = new Lejon($names[$i]);
+    $lejon = new Lejon($names[$nameIndex++]);
     array_push($animalArray, $lejon);
 }
 
 for ($i = 0; $i < $amountOfAntilops; $i++) {
-    $antilop = new Antilop($names[$i]);
+    $antilop = new Antilop($names[$nameIndex++]);
     array_push($animalArray, $antilop);
 }
 
 for ($i = 0; $i < $amountOfPalmtrees; $i++) {
-    $palm = new Palm($names[$i]);
+    $palm = new Palm($names[$nameIndex++]);
     array_push($animalArray, $palm);
 }
 
 for ($i = 0; $i < $amountOfGorillas; $i++) {
-    $gorilla = new Gorilla($names[$i]);
+    $gorilla = new Gorilla($names[$nameIndex++]);
     array_push($animalArray, $gorilla);
 }
 
 for ($i = 0; $i < $amountOfMeranti; $i++) {
-    $meranti = new Meranti($names[$i]);
+    $meranti = new Meranti($names[$nameIndex++]);
     array_push($animalArray, $meranti);
 }
 
 for ($i = 0; $i < $amountOfBoas; $i++) {
-    $boa = new Boa($names[$i]);
+    $boa = new Boa($names[$nameIndex++]);
     array_push($animalArray, $boa);
 }
 
 for ($i = 0; $i < $amountOfRoses; $i++) {
-    $rose = new Rose($names[$i]);
+    $rose = new Rose($names[$nameIndex++]);
     array_push($animalArray, $rose);
 }
 
@@ -274,5 +278,4 @@ for ($i = 0; $i < count($animalArray); $i++) {
 }
 
 echo '<a href="/?clear=true"><button>Clear</button></a>';
-
 ?>
